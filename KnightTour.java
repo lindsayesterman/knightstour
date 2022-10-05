@@ -35,25 +35,24 @@ public class KnightTour {
         // put the board with each different move in the stack
         // when you pick a move, pop it off the stack
         // TODO: ...... Add your solution code here ..... //
-        int coordinates[][] = { { 2, 1 }, { 1, 2 }, { 2, -1 }, { -1, 2 }, { 1, -2 }, { -1, -2 }, { -2, 1 },
-                { -2, -1 } };
-        KnightBoard currentBoard = candidates.peek();
+
+        KnightBoard currentBoard = new KnightBoard(n);
         while (candidates.size() > 0) {
             currentBoard = candidates.pop();
-            currentBoard.printChessBoard();
             if (currentBoard.getMoveCount() == n * n) {
-                System.out.println("Moves exceeded");
                 return currentBoard;
-            }
-            // it keeps going but it should instead explore more possibilities
-            for (int i = 0; i < coordinates.length; i++) {
-                int xPos = currentBoard.getCurrentX() + coordinates[i][0];
-                int yPos = currentBoard.getCurrentY() + coordinates[i][1];
-                KnightBoard newBoard = currentBoard;
-                // calls function and checks if it worked (was valid)
-                if (newBoard.move(xPos, yPos)) {
-                    candidates.push(newBoard);
-                    // currentBoard.printChessBoard();
+            } else {
+                int coordinates[][] = { { 2, 1 }, { 1, 2 }, { 2, -1 }, { -1, 2 }, { 1, -2 }, { -1, -2 }, { -2, 1 },
+                        { -2, -1 } };
+                // it keeps going but it should instead explore more possibilities
+                for (int i = 0; i < coordinates.length; i++) {
+                    int xPos = currentBoard.getCurrentX() + coordinates[i][0];
+                    int yPos = currentBoard.getCurrentY() + coordinates[i][1];
+                    KnightBoard newBoard = currentBoard.copyBoard();
+                    // calls function and checks if it worked (was valid)
+                    if (newBoard.move(xPos, yPos)) {
+                        candidates.push(newBoard);
+                    }
                 }
             }
         }
@@ -73,7 +72,7 @@ public class KnightTour {
             }
         }
         long startTime = System.nanoTime();
-        KnightBoard winner = KnightTour.tour(5);
+        KnightBoard winner = KnightTour.tour(4);
         long endTime = System.nanoTime();
         double delta = (endTime - startTime) / 1e6;
         // Display the solution you discovered:
