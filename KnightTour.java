@@ -1,10 +1,9 @@
-/* THIS CODE IS MY OWN WORK, IT WAS WRITTEN WITHOUT CONSULTING CODE WRITTEN BY OTHER STUDENTS OR COPIED FROM ONLINE RESOURCES. _Lindsay_Esterman_ */
-
 import java.util.Stack;
-
 // Do you know the chess piece that looks like a horse? It's called a "Knight",
 // and the "Knight's Tour" is a famous problem where you want the Knight to move
-// around a chess board such that it visits every position on the board exactly once.
+// around a chess board such that it visits every position on the board exactly 
+once.
+
 // Recall that the Knight can move in the shape of the letter "L" in any direction
 // IMPORTANT: See our A2 handout for examples and more detailed instructions/hints!
 public class KnightTour {
@@ -42,15 +41,16 @@ public class KnightTour {
             if (currentBoard.getMoveCount() == n * n) {
                 return currentBoard;
             } else {
-                int coordinates[][] = { { 2, 1 }, { 1, 2 }, { 2, -1 }, { -1, 2 }, { 1, -2 }, { -1, -2 }, { -2, 1 },
+                int coordinates[][] = { { 2, 1 }, { 1, 2 }, { 2, -1 }, { -1, 2 }, { 1, -2 },
+                        { -1, -2 }, { -2, 1 },
                         { -2, -1 } };
                 // it keeps going but it should instead explore more possibilities
-                for (int i = 0; i < coordinates.length; i++) {
-                    int xPos = currentBoard.getCurrentX() + coordinates[i][0];
-                    int yPos = currentBoard.getCurrentY() + coordinates[i][1];
+                for (int i = 0; i < 8; i++) {
+                    int xTest = currentBoard.getCurrentX() + coordinates[i][0];
+                    int yTest = currentBoard.getCurrentY() + coordinates[i][1];
                     KnightBoard newBoard = currentBoard.copyBoard();
                     // calls function and checks if it worked (was valid)
-                    if (newBoard.move(xPos, yPos)) {
+                    if (newBoard.move(xTest, yTest)) {
                         candidates.push(newBoard);
                     }
                 }
@@ -62,22 +62,22 @@ public class KnightTour {
     // Do NOT modify this main method. If you need to add code for
     // testing your solution, just make sure to comment it out before submission
     public static void main(String[] args) {
-        int n = 3; // default board size if user didn't specify
-        // pass in parameter n from command line
-        if (args.length == 1) {
-            n = Integer.parseInt(args[0].trim());
-            if (n < 3 || n > 8) {
-                System.out.println("Incorrect parameter (n must be >= 3 and <= 8)");
-                System.exit(-1);
-            }
-        }
-        long startTime = System.nanoTime();
-        KnightBoard winner = KnightTour.tour(4);
-        long endTime = System.nanoTime();
-        double delta = (endTime - startTime) / 1e6;
-        // Display the solution you discovered:
-        System.out.println("\nPossible Knight Tour with max #squares visited in this (" + n + "x" + n + ") board:");
-        winner.printChessBoard(); // commented out due to nullPointerException
-        System.out.println("\n(Time to find this solution = " + delta + " milliseconds)");
+      int n = 3; // default board size if user didn't specify
+      // pass in parameter n from command line
+      if (args.length == 1) {
+          n = Integer.parseInt(args[0].trim());
+          if (n < 3 || n > 8) {
+              System.out.println("Incorrect parameter (n must be >= 3 and <= 8)");
+              System.exit(-1);
+          }
+      }
+      long startTime = System.nanoTime();
+      KnightBoard winner = KnightTour.tour(n);
+      long endTime = System.nanoTime();
+      double delta = (endTime - startTime) / 1e6;
+      // Display the solution you discovered:
+      System.out.println("\nPossible Knight Tour with max #squares visited in this ("+n+"x" +n+") board:");
+      winner.printChessBoard();
+      System.out.println("\n(Time to find this solution = " + delta + " milliseconds)");
     }
 }
